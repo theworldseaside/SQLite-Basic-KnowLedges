@@ -8,7 +8,7 @@ class DatabaseManager:
         self.cursor = None
         
     def connect(self):
-        """Connect to the SQLite database"""
+        #Connect to ur database 
         try:
             self.connection = sqlite3.connect(self.db_name)
             self.cursor = self.connection.cursor()
@@ -17,7 +17,7 @@ class DatabaseManager:
             print(f"Error connecting to database: {e}")
     
     def create_table(self):
-        """Create a sample table if it doesn't exist"""
+        #Create a Table 
         try:
             self.cursor.execute('''
                 CREATE TABLE IF NOT EXISTS users (
@@ -34,7 +34,7 @@ class DatabaseManager:
             print(f"Error creating table: {e}")
     
     def add_data(self, name, email, age):
-        """Add new data to the database"""
+        #Add Data Into ur database
         try:
             self.cursor.execute(
                 "INSERT INTO users (name, email, age) VALUES (?, ?, ?)",
@@ -51,7 +51,7 @@ class DatabaseManager:
             return False
     
     def delete_data(self, data_id):
-        """Delete data from the database by ID"""
+        #Delete data from database
         try:
             # Check if the record exists
             self.cursor.execute("SELECT * FROM users WHERE id = ?", (data_id,))
@@ -68,7 +68,7 @@ class DatabaseManager:
             return False
     
     def view_all_data(self):
-        """View all data in the database"""
+        #Check all data
         try:
             self.cursor.execute("SELECT * FROM users")
             rows = self.cursor.fetchall()
@@ -88,7 +88,7 @@ class DatabaseManager:
             print(f"Error viewing data: {e}")
     
     def search_data(self, search_term):
-        """Search for data by name or email"""
+        #Search needded data in ur database
         try:
             self.cursor.execute(
                 "SELECT * FROM users WHERE name LIKE ? OR email LIKE ?",
@@ -112,7 +112,7 @@ class DatabaseManager:
             print(f"Error searching data: {e}")
     
     def close(self):
-        """Close the database connection"""
+        #close connection
         if self.connection:
             self.connection.close()
             print("Database connection closed.")
@@ -182,4 +182,5 @@ def main():
     db.close()
 
 if __name__ == "__main__":
+
     main()
