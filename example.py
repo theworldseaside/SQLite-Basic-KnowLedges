@@ -2,7 +2,7 @@ import sqlite3
 import os
 
 class DatabaseManager:
-    def __init__(self, db_name="testing.db"):
+    def __init__(self, db_name="NAME"):
         self.db_name = db_name
         self.connection = None
         self.cursor = None
@@ -20,7 +20,7 @@ class DatabaseManager:
         #Create a Table 
         try:
             self.cursor.execute('''
-                CREATE TABLE IF NOT EXISTS users (
+                CREATE TABLE IF NOT EXISTS "ANY_NAME" (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     name TEXT NOT NULL,
                     email TEXT NOT NULL UNIQUE,
@@ -37,7 +37,7 @@ class DatabaseManager:
         #Add Data Into ur database
         try:
             self.cursor.execute(
-                "INSERT INTO users (name, email, age) VALUES (?, ?, ?)",
+                "INSERT INTO "ANY_NAME" (name, email, age) VALUES (?, ?, ?)",
                 (name, email, age)
             )
             self.connection.commit()
@@ -54,7 +54,7 @@ class DatabaseManager:
         #Delete data from database
         try:
             # Check if the record exists
-            self.cursor.execute("SELECT * FROM users WHERE id = ?", (data_id,))
+            self.cursor.execute("SELECT * FROM "ANY_NAME" WHERE id = ?", (data_id,))
             if not self.cursor.fetchone():
                 print(f"No record found with ID: {data_id}")
                 return False
@@ -70,7 +70,7 @@ class DatabaseManager:
     def view_all_data(self):
         #Check all data
         try:
-            self.cursor.execute("SELECT * FROM users")
+            self.cursor.execute("SELECT * FROM "ANY_NAME"")
             rows = self.cursor.fetchall()
             
             if not rows:
@@ -91,7 +91,7 @@ class DatabaseManager:
         #Search needded data in ur database
         try:
             self.cursor.execute(
-                "SELECT * FROM users WHERE name LIKE ? OR email LIKE ?",
+                "SELECT * FROM "ANY_NAME" WHERE name LIKE ? OR email LIKE ?",
                 (f'%{search_term}%', f'%{search_term}%')
             )
             rows = self.cursor.fetchall()
@@ -184,3 +184,4 @@ def main():
 if __name__ == "__main__":
 
     main()
+
